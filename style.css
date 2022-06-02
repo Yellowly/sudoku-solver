@@ -1,0 +1,56 @@
+body{
+    background-color:rgb(34, 35, 38);
+    color:rgb(189,193,198);
+    font-family: Arial;
+}
+.inputs input{
+    width: 32px; 
+    height: 20px;
+    padding: 1px;
+    font-size: 16px;
+    color:rgb(189,193,198);
+    background-color: rgb(48,49,52);
+    border: 2px solid rgb(48,49,52);
+    border-radius:8px;
+    outline:none;
+} 
+.inputs input:focus{
+    border-radius:5px;
+} 
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.inputs label{
+    font-size: 16px;
+    color:rgb(189,193,198);
+}
+
+.sudoku-board input{
+    width: 32px; 
+    height: 32px;
+    padding: 1px;
+    font-size: 24px;
+    color:rgb(189,193,198);
+    background-color: rgb(48,49,52);
+    border: none;
+    border-radius:4px;
+    outline:white;
+    text-align:center;
+    margin: 1px;
+}
+
+.sudoku-board .grid .griditem{
+    display: inline-block;
+    min-width: 32px;
+    min-height:32px;
+    padding: 1px;
+    font-size: 24px;
+    background-color: rgb(58,59,62);
+    border: none;
+    border-radius:4px;
+    margin: 1px;
+    text-align: center;
+}
