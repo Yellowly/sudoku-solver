@@ -138,6 +138,7 @@ enum Msg{
     UpdateDimentions(u32),
     UpdateContent(u32, u32),
     Solve,
+    Reinput,
     None,
 }
 
@@ -156,6 +157,8 @@ impl Component for CounterComponent{
     fn update(&mut self, _ctx: &Context<Self>, msg: Self::Message) -> bool{
         match msg{
             Msg::UpdateDimentions(val) =>{
+                let mut val = val;
+                if val>4 {val = 4};
                 self.cell_dimentions=val;
                 self.inputs=vec![0;(val*val*val*val) as usize];
                 if self.solution.len()!=0 {self.solution = Vec::new()}
@@ -179,6 +182,10 @@ impl Component for CounterComponent{
                 };*/
                 true
             }
+            Msg::Reinput =>{
+                if self.solution.len()!=0{self.solution=Vec::new()};
+                true
+            }
             Msg::None =>{
                 //PreviousInput::create(yew::);
                 false
@@ -189,6 +196,7 @@ impl Component for CounterComponent{
         let link = _ctx.link();
         let cols: u32 = &self.cell_dimentions*&self.cell_dimentions;
         let rows: u32 = cols;
+        let cd: u32 = self.cell_dimentions;
         html! {
             <>
                 <div class = "i">
@@ -198,8 +206,8 @@ impl Component for CounterComponent{
                 </div>
                 <div class = "inputs">
                     <br/>
-                    <label for="celen">{"cell side length: "}</label>
-                    <input type="number" id="celen" name="celen" min="0" max="5" oninput={link.callback(|event: InputEvent| {let input: HtmlInputElement = event.target_unchecked_into(); Msg::UpdateDimentions(input.value().parse::<u32>().unwrap_or(0))})}/>
+                    <label for="celen">{"cell side length (1-4): "}</label>
+                    <input type="number" id="celen" name="celen" min="0" max="9" oninput={link.callback(|event: InputEvent| {let input: HtmlInputElement = event.target_unchecked_into(); Msg::UpdateDimentions(input.value().parse::<u32>().unwrap_or(0))})}/>
                     //<p> <br/> {self.text.clone()} </p>
                 </div>
                 <div class = "sudoku-board">
@@ -212,7 +220,10 @@ impl Component for CounterComponent{
                                 if (i as u32)%self.cell_dimentions==0 {<span class="space">{"  "}</span>}
                                 <span class="griditem">
                                 //if (i as u32)%rows==0 {<br/>}
-                                {v}
+                                if self.inputs[i]!=0 {<span class="bold">{v}</span>}
+                                else{
+                                    {v}
+                                }
                                 </span>
                                 </>
                                 }
@@ -226,13 +237,21 @@ impl Component for CounterComponent{
                                     if v%cols==0 {<br/>}
                                     if v%(rows*self.cell_dimentions)==0{<br/>}
                                     if v%self.cell_dimentions==0 {<label for={v.to_string()}>{"   "}</label>}
-                                    <input type="number" id={v.to_string()} name={v.to_string()} min="0" max="9" oninput={link.callback(move |event: InputEvent| {let input: HtmlInputElement = event.target_unchecked_into(); Msg::UpdateContent(v,input.value().parse::<u32>().unwrap_or(0))})}/>
+                                    if self.inputs[v as usize]!=0{<input type="number" id={v.to_string()} name={v.to_string()} value={self.inputs[v as usize].to_string()} oninput={link.callback(move |event: InputEvent| {let input: HtmlInputElement = event.target_unchecked_into(); Msg::UpdateContent(v,input.value().parse::<u32>().unwrap_or(0))})}/>}
+                                    else{<input type="number" id={v.to_string()} name={v.to_string()} oninput={link.callback(move |event: InputEvent| {let input: HtmlInputElement = event.target_unchecked_into(); Msg::UpdateContent(v,input.value().parse::<u32>().unwrap_or(0))})}/>}
                                     </>}
                                 }).collect::<Html>()
                         }
                     }
                 </div>
-                <button onclick={link.callback(|_| Msg::Solve)}> {"solve"}</button>
+                <div class="solvebuttons">
+                    <br/>
+                    if self.solution.len()!=0{
+                        <button onclick={link.callback(move |_| Msg::UpdateDimentions(cd))}> {"reset"}</button>
+                        <button onclick={link.callback(|_| Msg::Reinput)}> {"reinput"}</button>
+                    }
+                    else{<button onclick={link.callback(|_| Msg::Solve)}> {"solve"}</button>}
+                </div>
             </>
         }
     }

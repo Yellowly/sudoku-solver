@@ -27,6 +27,10 @@ input::-webkit-inner-spin-button {
     font-size: 16px;
     color:rgb(189,193,198);
 }
+.bold{
+    font-weight:bold;
+    color:rgb(199, 208, 208);
+}
 
 .sudoku-board input{
     width: 32px; 
@@ -53,4 +57,22 @@ input::-webkit-inner-spin-button {
     border-radius:4px;
     margin: 1px;
     text-align: center;
+}
+
+button{
+    min-width: 48px;
+    min-height:24px;
+    background-color: rgb(58,59,62);
+    color:rgb(189,193,198);
+    border: none;
+    border-radius:4px;
+    margin: 1px;
+    display: inline-block;
+}
+
+button:hover{
+    background-color: rgb(48,49,52);
+}
+button:active{
+    background-color: rgb(38,39,42);
 }
