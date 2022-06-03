@@ -201,8 +201,8 @@ impl Component for CounterComponent{
             <>
                 <div class = "i">
                     <h1> {"sudoku solver"} <br/> </h1>
-                    <p>{"sudoku solver"}
-                    <br/> <br/> </p>
+                    <a href="https://github.com/Yellowly/sudoku-solver">{"code"}</a>
+                    <br/> <br/>
                 </div>
                 <div class = "inputs">
                     <br/>

@@ -76,3 +76,12 @@ button:hover{
 button:active{
     background-color: rgb(38,39,42);
 }
+
+a{
+    color:rgb(113, 182, 199);
+    text-decoration: none;
+}
+a:hover{
+    color:rgb(68, 218, 255);
+    text-decoration: none;
+}
